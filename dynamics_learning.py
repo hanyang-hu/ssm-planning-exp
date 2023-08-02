@@ -66,6 +66,9 @@ class DynamicsModel(torch.nn.Module):
         kl_loss = kl_divergence(next_latents_dist, self.p_t(torch.cat((latents, actions), dim=-1))).mean()
 
         return -rec_loss + kl_loss
+    
+    def analytical_loss(self, transition):
+        pass
 
 
 if __name__ == '__main__':
@@ -78,17 +81,17 @@ if __name__ == '__main__':
 
     state_dim = 128
     action_dim = 5
-    latent_dim = 128
+    latent_dim = 196
     hidden_dim = [256, 256]
     lr = 1e-3
     device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
     model = DynamicsModel(state_dim, action_dim, latent_dim, hidden_dim, device)
-    optimizer = torch.optim.AdamW(model.parameters(), lr=lr)
-    # scheduler = lr_scheduler.LinearLR(optimizer, start_factor=1.0, end_factor=0.1, total_iters=100)
+    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+    scheduler = lr_scheduler.LinearLR(optimizer, start_factor=1.0, end_factor=0.5, total_iters=100)
 
     batch_size = 128
-    n_epochs = 100
+    n_epochs = 300
     n_iterations = 10
 
     dataset = TransformDataset('transition_data.pkl')
@@ -107,7 +110,7 @@ if __name__ == '__main__':
                     loss.backward()
                     optimizer.step()
                     loss_lst.append(loss.detach().item())
-                # scheduler.step()
+                scheduler.step()
                 total_loss_lst = total_loss_lst + loss_lst
                 pbar.set_postfix({'loss': '%.3f' % (np.mean(loss_lst))})
                 pbar.update(1)
