@@ -16,8 +16,8 @@ My first attempt is to sample the log_probs, what I plan to do is to figure out 
 
 ![image](./figures/moving_avg_loss.png)
 
-Average planning performance: 11.99 (very poor, perhaps needs to change the settings)
+Average planning performance: 11.99 (very poor, perhaps needs to change the MPC settings)
 
-### Trained with analytical reconstruction loss
+### Trained with the analytical reconstruction loss
 
 Pending
