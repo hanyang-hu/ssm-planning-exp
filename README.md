@@ -8,9 +8,16 @@ The fixed `attn_feature.pt` that is used in the transform method of `dataset.py`
 
 ## Loss function
 
-My first attempt is to sample the log_probs, what I plan to do is to figure out an analytical expression to avoid sampling (hence enhance efficiency and robustness).
+My first attempt is to sample the log_probs, what I plan to do is to figure out an analytical expression to avoid sampling (hence enhancing efficiency and robustness).
 
 ## Result
 
-Pending
+### Trained with an estimation of reconstruction loss
 
+![image](./figures/moving_avg_loss.png)
+
+Average planning performance: pending
+
+### Trained with analytical reconstruction loss
+
+Pending
